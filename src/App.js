@@ -50,29 +50,83 @@ const tempWatchedData = [
 export default function App() {
   return (
     <div>
-      <nav className="navbar">
-        <div className="logo">
-          <h1>🍿 usePopcorn</h1>
-        </div>
-        <form>
-          <input
-            className="search"
-            type="text"
-            placeholder="Search Movies..."
-          />
-        </form>
-        <div className="num-found">
-          Found <span>X</span> result
-        </div>
-      </nav>
-      <main className="main">
-        <div className="box">
-          <button className="toggle-box">-</button>
-        </div>
-        <div className="box">
-          <button className="toggle-box">+</button>
-        </div>
-      </main>
+      <Nav />
+      <Main />
+    </div>
+  );
+}
+
+function Nav() {
+  return (
+    <nav className="navbar">
+      <div className="logo">
+        <h1>🍿 usePopcorn</h1>
+      </div>
+      <form>
+        <input className="search" type="text" placeholder="Search Movies..." />
+      </form>
+      <div className="num-found">
+        Found <span>X</span> result
+      </div>
+    </nav>
+  );
+}
+
+function Main() {
+  const [isOpen, setIsOpen] = useState(true);
+  return (
+    <main className="main">
+      <Box isOpen={isOpen} onIsOpen={() => setIsOpen(!isOpen)}>
+        <List>{isOpen && <MovieList />}</List>
+      </Box>
+      <Box>
+        <List>{isOpen && <WatchList />}</List>
+      </Box>
+    </main>
+  );
+}
+
+function Box({ children, isOpen, onIsOpen }) {
+  return (
+    <div className="box">
+      <button className="toggle-box" onClick={onIsOpen}>
+        {isOpen ? "-" : "+"}
+      </button>
+      {children}
+    </div>
+  );
+}
+
+function List({ children }) {
+  return <ul>{children}</ul>;
+}
+
+function MovieList() {
+  return (
+    <li>
+      {tempMovieData.map((movie) => (
+        <Movie movie={movie} key={tempMovieData.imdbID} />
+      ))}
+    </li>
+  );
+}
+
+function WatchList() {
+  return (
+    <li>
+      {tempWatchedData.map((movie) => (
+        <Movie movie={movie} key={tempWatchedData.imdbID} />
+      ))}
+    </li>
+  );
+}
+
+function Movie({ movie }) {
+  return (
+    <div>
+      <img src={movie.Poster} alt={movie.Title} />
+      <h3>{movie.Title}</h3>
+      <p>{movie.runtime}</p>
     </div>
   );
 }
