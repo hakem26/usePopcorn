@@ -102,7 +102,6 @@ body {
 .toggle-box {
   display: flex;
   justify-content: center;
-  align-items: center;
   width: 2.5rem;
   height: 2.5rem;
   font-size: 2.2rem;
@@ -114,6 +113,70 @@ body {
   top: 1rem;
   right: 1rem;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.toggle-box:hover {
+  color: var(--color-text-dark);
+  box-shadow: 0 0 1rem 0 #343434;
+}
+
+.movie-list {
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-background-100);
+}
+
+.card img {
+  height: 80px;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-basis: 100%;
+}
+
+.description h3 {
+  font-size: 2rem;
+}
+
+.description p {
+  font-size: 1.6rem;
+}
+
+.movie-info {
+  display: flex;
+  gap: 1rem;
+}
+
+.watch-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-del {
+  display: flex;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1.6rem;
+  background-color: var(--color-red);
+  color: var(--color-background-900);
+  transition: all 0.3s ease-in-out;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.btn-del:hover {
+  background-color: var(--color-red-dark);
+  color: var(--color-background-500);
 }
 
 @media screen and (max-width: 840px) {

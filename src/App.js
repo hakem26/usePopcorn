@@ -73,32 +73,38 @@ function Nav() {
 }
 
 function Main() {
-  const [isOpen, setIsOpen] = useState(true);
   return (
     <main className="main">
-      <Box isOpen={isOpen} onIsOpen={() => setIsOpen(!isOpen)}>
-        <List>{isOpen && <MovieList />}</List>
+      <Box>
+        <List>
+          <MovieList />
+        </List>
       </Box>
       <Box>
-        <List>{isOpen && <WatchList />}</List>
+        <List>
+          {" "}
+          {/*TODO <WatchSummary /> */}
+          <WatchList />
+        </List>
       </Box>
     </main>
   );
 }
 
-function Box({ children, isOpen, onIsOpen }) {
+function Box({ children }) {
+  const [isOpen, setIsOpen] = useState(true);
   return (
     <div className="box">
-      <button className="toggle-box" onClick={onIsOpen}>
+      <button className="toggle-box" onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? "-" : "+"}
       </button>
-      {children}
+      {isOpen && children}
     </div>
   );
 }
 
 function List({ children }) {
-  return <ul>{children}</ul>;
+  return <ul className="movie-list">{children}</ul>;
 }
 
 function MovieList() {
@@ -114,8 +120,8 @@ function MovieList() {
 function WatchList() {
   return (
     <li>
-      {tempWatchedData.map((movie) => (
-        <Movie movie={movie} key={tempWatchedData.imdbID} />
+      {tempWatchedData.map((watch) => (
+        <Watch watch={watch} key={tempWatchedData.imdbID} />
       ))}
     </li>
   );
@@ -123,10 +129,32 @@ function WatchList() {
 
 function Movie({ movie }) {
   return (
-    <div>
+    <div className="card">
       <img src={movie.Poster} alt={movie.Title} />
-      <h3>{movie.Title}</h3>
-      <p>{movie.runtime}</p>
+      <div className="description">
+        <h3>{movie.Title}</h3>
+        <div className="movie-info">
+          <span>📅</span>
+          <p>{movie.Year}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Watch({ watch }) {
+  return (
+    <div className="card">
+      <img src={watch.Poster} alt={watch.Title} />
+      <div className="description">
+        <h3>{watch.Title}</h3>
+        <div className="watch-info">
+          <p>⭐{watch.imdbRating}</p>
+          <p>🌟 {watch.userRating}</p>
+          <p>⏳ {watch.runtime}</p>
+          <buttun className="btn-del">x</buttun>
+        </div>
+      </div>
     </div>
   );
 }
